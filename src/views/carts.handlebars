@@ -1,0 +1,51 @@
+<div>
+    <h2>Listado de Productos del carrito</h2>
+    <table id="listTable">
+        <tr>
+            <th>ID</th>
+            <th>Titulo</th>
+            <th>Descripción</th>
+            <th>Código</th>
+            <th>Precio</th>
+            <th>Estatus</th>
+            <th>Stock</th>
+            <th>Categoria</th>
+            <th>Imagenes</th>
+            <th>Acciones</th>
+        </tr>
+    {{#each products}}
+        <tr id="rowNo{{this.product._id}}">
+            <td>{{this.product._id}}</td>
+            <td>{{this.product.title}}</td>
+            <td>{{this.product.description}}</td>
+            <td>{{this.product.code}}</td>
+            <td>${{this.product.price}}</td>
+            {{#if this.product.status}}
+                <td class="green">Activo</td>
+            {{else}}
+                <td class="red">Inactivo</td>
+            {{/if}}
+            <td>{{this.product.stock}}</td>
+            <td>{{this.product.category}}</td>
+            {{#if this.product.thumbnails.length}}
+                <td>
+                    {{#each this.product.thumbnails}}
+                        {{this}}<br>
+                    {{/each}}
+                </td>
+            {{else}}
+                <td>&nbsp;</td>
+            {{/if}}
+            <td>
+                <form class="addForm">
+                    <input type="hidden" name="product_id" value="{{this._id}}">
+                    <button type="submit">Agregar a carrito</button>
+                </form>
+            </td>
+        </tr>
+    {{/each}}
+    </table>
+</div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../../js/index.js"></script>

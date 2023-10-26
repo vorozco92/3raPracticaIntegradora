@@ -1,0 +1,43 @@
+<div>
+    <h2>Listado de Productos (tiempo real)</h2>
+    <table id="listTable">
+        <tr>
+            <th>ID</th>
+            <th>Titulo</th>
+            <th>Descripción</th>
+            <th>Código</th>
+            <th>Precio</th>
+            <th>Estatus</th>
+            <th>Stock</th>
+            <th>Categoria</th>
+            <th>Imagenes</th>
+        </tr>
+    {{#each listProducts}}
+        <tr id="rowNo{{this.id}}">
+            <td>{{this.id}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.code}}</td>
+            <td>${{this.price}}</td>
+            {{#if this.status}}
+                <td class="green">Activo</td>
+            {{else}}
+                <td class="red">Inactivo</td>
+            {{/if}}
+            <td>{{this.stock}}</td>
+            <td>{{this.category}}</td>
+            {{#if this.thumbnails.length}}
+                <td>
+                    {{#each this.thumbnails}}
+                        {{this}}<br>
+                    {{/each}}
+                </td>
+            {{else}}
+                <td>&nbsp;</td>
+            {{/if}}
+        </tr>
+    {{/each}}
+    </table>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/indexReal.js"></script>

@@ -1,0 +1,78 @@
+<div>
+    <form style="float:right" method="POST" action="/api/sessions/logout">
+        <button type="submit">Cerrar Sesión</button>
+    </form>
+    <h2>Listado de Productos</h2>
+
+    <h5 style="text-align:right" >Bienvenido {{user.name}},  (Rol:{{#if user.role }} {{user.role}} {{else}} usuario{{/if}}) {{user.email}}</h5>
+    
+    <div>
+        <h1>ChatBox </h1>
+        <input id="chatBox">   
+        <p id="messageLogs">
+        </p>
+        
+    </div>
+    <table id="listTable">
+        <tr>
+            <th>ID</th>
+            <th>Titulo</th>
+            <th>Descripción</th>
+            <th>Código</th>
+            <th>Precio</th>
+            <th>Estatus</th>
+            <th>Stock</th>
+            <th>Categoria</th>
+            <th>Imagenes</th>
+            <th>Acciones</th>
+        </tr>
+    {{#each payload}}
+        <tr id="rowNo{{this._id}}">
+            <td>{{this._id}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.code}}</td>
+            <td>${{this.price}}</td>
+            {{#if this.status}}
+                <td class="green">Activo</td>
+            {{else}}
+                <td class="red">Inactivo</td>
+            {{/if}}
+            <td>{{this.stock}}</td>
+            <td>{{this.category}}</td>
+            {{#if this.thumbnails.length}}
+                <td>
+                    {{#each this.thumbnails}}
+                        {{this}}<br>
+                    {{/each}}
+                </td>
+            {{else}}
+                <td>&nbsp;</td>
+            {{/if}}
+            <td>
+                <form class="addForm">
+                    <input type="hidden" name="product_id" value="{{this._id}}">
+                    <button type="submit">Agregar a carrito</button>
+                </form>
+            </td>
+        </tr>
+    {{/each}}
+    </table>
+    <div>        
+        <section class="paginacion">
+			<ul>
+                 {{#if  hasPrevPage}}
+				<li><a href="{{prevLink}}"> Anterior</a></li>
+                {{/if}}
+              
+				<li><a href="#" class="active">Página {{ page}}</a></li>
+                 {{#if  hasNextPage}}
+				<li><a href="{{nextLink}}" >Siguiente</a></li>
+                 {{/if}}
+			</ul>
+		</section>
+    </div>
+</div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../../js/indexReal.js"></script>
